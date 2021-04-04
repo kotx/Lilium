@@ -38,12 +38,10 @@ impl Loader<TypefaceContainer> for TypefaceLoader {
         content: std::borrow::Cow<[u8]>,
         _ext: &str,
     ) -> Result<TypefaceContainer, assets_manager::BoxedError> {
-        unsafe {
-            let data = Data::new_bytes(content.as_ref());
-            let typeface = Typeface::from_data(data, 0).unwrap();
+        let data = Data::new_copy(content.as_ref());
+        let typeface = Typeface::from_data(data, 0).unwrap();
 
-            Ok(TypefaceContainer { 0: typeface })
-        }
+        Ok(TypefaceContainer { 0: typeface })
     }
 }
 
