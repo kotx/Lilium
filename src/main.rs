@@ -7,6 +7,14 @@ use skulpin::skia_safe::{self, Font};
 use skulpin::CoordinateSystemHelper;
 use skulpin::{rafx::api::RafxExtents2D, skia_bindings::SkTextUtils_Align};
 
+#[cfg(debug_assertions)]
+fn debug_builtin_cache() {
+    assets::builtin().enhance_hot_reloading();
+}
+
+#[cfg(not(debug_assertions))]
+fn debug_builtin_cache() {}
+
 fn main() {
     env_logger::Builder::from_default_env()
         .filter_level(log::LevelFilter::Debug)
@@ -57,6 +65,9 @@ fn main() {
     if let Some(user) = assets::user() {
         user.enhance_hot_reloading();
     }
+
+    // Enable hot reloading for dynamic builtin cache (if present)
+    debug_builtin_cache();
 
     // Increment a frame count so we can render something that moves
     let mut frame_count: u64 = 0;

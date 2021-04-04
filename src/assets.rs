@@ -1,13 +1,20 @@
-use assets_manager::{
-    loader::Loader,
-    source::{embed, Embedded},
-    Asset, AssetCache,
-};
+#[cfg(not(debug_assertions))]
+use assets_manager::source::{embed, Embedded};
+
+use assets_manager::{loader::Loader, Asset, AssetCache};
 use once_cell::sync::OnceCell;
 use skulpin::skia_safe::{Data, Typeface};
 
+#[cfg(debug_assertions)]
+pub fn builtin() -> &'static AssetCache {
+    static BUILTIN_CACHE: OnceCell<AssetCache> = OnceCell::new();
+
+    BUILTIN_CACHE.get_or_init(|| AssetCache::new("resources").unwrap())
+}
+
+#[cfg(not(debug_assertions))]
 pub fn builtin() -> &'static AssetCache<Embedded<'static>> {
-    pub static BUILTIN_CACHE: OnceCell<AssetCache<Embedded>> = OnceCell::new();
+    static BUILTIN_CACHE: OnceCell<AssetCache<Embedded>> = OnceCell::new();
 
     BUILTIN_CACHE.get_or_init(|| {
         let embed = Embedded::from(embed!("resources"));
@@ -16,7 +23,7 @@ pub fn builtin() -> &'static AssetCache<Embedded<'static>> {
 }
 
 pub fn user() -> Option<&'static AssetCache> {
-    pub static USER_CACHE: OnceCell<AssetCache> = OnceCell::new();
+    static USER_CACHE: OnceCell<AssetCache> = OnceCell::new();
 
     USER_CACHE
         .get_or_try_init(|| AssetCache::new("assets"))
