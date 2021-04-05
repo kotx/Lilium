@@ -107,11 +107,11 @@ impl LilyApp {
         }
     }
 
-    pub fn update(self: &mut Self) {
+    pub fn update(&mut self) {
         self.tick_count += 1;
     }
 
-    pub fn handle_event(self: &Self, event: Event<()>) -> bool {
+    pub fn handle_event(&self, event: Event<()>) -> bool {
         match event {
             winit::event::Event::WindowEvent {
                 event:
@@ -132,7 +132,7 @@ impl LilyApp {
         true
     }
 
-    pub fn render(self: &Self, window: &Window) {
+    pub fn render(&self, window: &Window) {
         let window_size = window.inner_size();
         let window_extents = RafxExtents2D {
             width: window_size.width,
@@ -153,7 +153,7 @@ impl LilyApp {
     }
 
     fn draw(
-        self: &Self,
+        &self,
         canvas: &mut skia_safe::Canvas,
         _coordinate_system_helper: CoordinateSystemHelper,
         tick_count: u64,
