@@ -16,5 +16,9 @@ version = "^0.13"
 default-features = false
 
 [dependencies.assets_manager]
-version = "0.4"
+version = "^0.4"
 features = ["hot-reloading", "embedded"]
+
+[dependencies.game-loop]
+version = "^0.7"
+features = ["window"]
