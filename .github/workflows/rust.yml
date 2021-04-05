@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        toolchain: [stable]
+        toolchain: [nightly]
         os: [windows-2019, ubuntu-20.04]
     runs-on: ${{ matrix.os }}
     needs: clean
