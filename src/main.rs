@@ -145,7 +145,7 @@ impl LilyApp {
             window_extents,
             window.scale_factor(),
             |canvas, coordinate_system_helper| {
-                self.draw(canvas, coordinate_system_helper, self.tick_count);
+                self.draw(canvas, coordinate_system_helper);
             },
         ) {
             println!("Error during draw: {:?}", e);
@@ -156,20 +156,17 @@ impl LilyApp {
         &self,
         canvas: &mut skia_safe::Canvas,
         _coordinate_system_helper: CoordinateSystemHelper,
-        tick_count: u64,
     ) {
         canvas.clear(skia_safe::Color::from_argb(0, 0, 0, 255));
 
         // Floating point value constantly moving between 0..1 to generate some movement
-        let f = ((tick_count as f32 / 500.0).sin() + 1.0) / 2.0;
+        let f = ((self.tick_count as f32 / 500.0).sin() + 1.0) / 2.0;
 
-        // Make a color to draw with
         let mut paint = skia_safe::Paint::new(skia_safe::Color4f::new(f, 0.0, 1.0 - f, 1.0), None);
         paint.set_anti_alias(false);
         paint.set_style(skia_safe::paint::Style::Stroke);
         paint.set_stroke_width(2.0);
 
-        // Draw a rectangle
         canvas.draw_rect(
             skia_safe::Rect {
                 left: 10.0,
@@ -185,9 +182,16 @@ impl LilyApp {
             .unwrap();
 
         let typeface = &handle.read().0;
-
-        let font = Font::from_typeface(typeface, 50.0);
+        let font = Font::from_typeface(typeface, 64.0);
 
         canvas.draw_str_align("owo", (450, 300), &font, &paint, SkTextUtils_Align::Center);
+
+        canvas.draw_str_align(
+            format!("{:.2}", f),
+            (450, 100),
+            &font,
+            &paint,
+            SkTextUtils_Align::Center,
+        );
     }
 }
