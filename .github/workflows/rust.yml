@@ -27,7 +27,7 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-check-test-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Check
+      - name: Build
         run: cargo check
         env:
           CARGO_INCREMENTAL: 0
@@ -40,7 +40,7 @@ jobs:
 
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
           components: rustfmt, clippy
           override: true
 
