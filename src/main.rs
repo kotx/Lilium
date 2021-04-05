@@ -32,11 +32,11 @@ fn main() {
     // Set up the coordinate system to be fixed at 900x600, and use this as the default window size
     // This means the drawing code can be written as though the window is always 900x600. The
     // output will be automatically scaled so that it's always visible.
-    let logical_size = winit::dpi::LogicalSize::new(900.0, 600.0);
+    let logical_size = winit::dpi::LogicalSize::new(900., 600.);
     let visible_range = skulpin::skia_safe::Rect {
-        left: 0.0,
+        left: 0.,
         right: logical_size.width as f32,
-        top: 0.0,
+        top: 0.,
         bottom: logical_size.height as f32,
     };
     let scale_to_fit = skulpin::skia_safe::matrix::ScaleToFit::Center;
@@ -160,19 +160,19 @@ impl LilyApp {
         canvas.clear(skia_safe::Color::from_argb(0, 0, 0, 255));
 
         // Floating point value constantly moving between 0..1 to generate some movement
-        let f = ((self.tick_count as f32 / 500.0).sin() + 1.0) / 2.0;
+        let f = ((self.tick_count as f32 / 500.).sin() + 1.) / 2.;
 
-        let mut paint = skia_safe::Paint::new(skia_safe::Color4f::new(f, 0.0, 1.0 - f, 1.0), None);
+        let mut paint = skia_safe::Paint::new(skia_safe::Color4f::new(f, 0., 1. - f, 1.), None);
         paint.set_anti_alias(false);
         paint.set_style(skia_safe::paint::Style::Stroke);
-        paint.set_stroke_width(2.0);
+        paint.set_stroke_width(2.);
 
         canvas.draw_rect(
             skia_safe::Rect {
-                left: 10.0,
-                top: 10.0,
-                right: 890.0,
-                bottom: 590.0,
+                left: 10.,
+                top: 10.,
+                right: 890.,
+                bottom: 590.,
             },
             &paint,
         );
@@ -182,13 +182,25 @@ impl LilyApp {
             .unwrap();
 
         let typeface = &handle.read().0;
-        let font = Font::from_typeface(typeface, 64.0);
+        let font = Font::from_typeface(typeface, 64.);
 
-        canvas.draw_str_align("owo", (450, 300), &font, &paint, SkTextUtils_Align::Center);
+        paint.set_style(skulpin::skia_bindings::SkPaint_Style::Fill);
+
+        canvas.draw_rect(
+            skia_safe::Rect {
+                left: 20.,
+                top: 20.,
+                right: f * 860. + 20.,
+                bottom: 580.,
+            },
+            &paint,
+        );
+
+        paint.set_color4f(skia_safe::Color4f::new(0., 0., 0., 1.), None);
 
         canvas.draw_str_align(
-            format!("{:.2}", f),
-            (450, 100),
+            format!("{:.0}%", f * 100.),
+            (450, 300),
             &font,
             &paint,
             SkTextUtils_Align::Center,
