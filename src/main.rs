@@ -188,6 +188,6 @@ impl LilyApp {
 
         let font = Font::from_typeface(typeface, 50.0);
 
-        canvas.draw_str_align("hi", (450, 300), &font, &paint, SkTextUtils_Align::Center);
+        canvas.draw_str_align("owo", (450, 300), &font, &paint, SkTextUtils_Align::Center);
     }
 }
