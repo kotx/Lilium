@@ -764,7 +764,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "lily"
+name = "lilium"
 version = "0.1.0"
 dependencies = [
  "assets_manager",

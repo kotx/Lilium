@@ -42,7 +42,7 @@ fn main() {
     let scale_to_fit = skulpin::skia_safe::matrix::ScaleToFit::Center;
 
     let window = winit::window::WindowBuilder::new()
-        .with_title("Lily")
+        .with_title("Lilium")
         .with_inner_size(logical_size)
         .build(&event_loop)
         .expect("Failed to create window");
@@ -76,12 +76,12 @@ fn main() {
     // Enable hot reloading for dynamic builtin cache (if present)
     debug_builtin_cache();
 
-    let lily_app = LilyApp::new(renderer);
+    let lilium = Lilium::new(renderer);
 
     game_loop(
         event_loop,
         window,
-        lily_app,
+        lilium,
         240,
         0.1,
         |g| g.game.update(),
@@ -94,12 +94,12 @@ fn main() {
     );
 }
 
-struct LilyApp {
+struct Lilium {
     tick_count: u64,
     renderer: Mutex<Renderer>,
 }
 
-impl LilyApp {
+impl Lilium {
     pub fn new(renderer: Renderer) -> Self {
         Self {
             tick_count: 0,
@@ -186,11 +186,14 @@ impl LilyApp {
 
         paint.set_style(skulpin::skia_bindings::SkPaint_Style::Fill);
 
+        // Temporary value for visual effect
+        let percent = (self.tick_count as f32 / 240.).clamp(0., 1.);
+
         canvas.draw_rect(
             skia_safe::Rect {
                 left: 20.,
                 top: 20.,
-                right: f * 860. + 20.,
+                right: percent * 860. + 20.,
                 bottom: 580.,
             },
             &paint,
@@ -199,7 +202,7 @@ impl LilyApp {
         paint.set_color4f(skia_safe::Color4f::new(0., 0., 0., 1.), None);
 
         canvas.draw_str_align(
-            format!("{:.0}%", f * 100.),
+            format!("{:.0}%", percent * 100.),
             (450, 300),
             &font,
             &paint,
