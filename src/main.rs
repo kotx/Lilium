@@ -14,13 +14,16 @@ use skulpin::{
 };
 use winit::{event::Event, window::Window};
 
-#[cfg(debug_assertions)]
-fn debug_builtin_cache() {
-    assets::builtin().enhance_hot_reloading();
+cfg_if::cfg_if! {
+    if #[cfg(debug_assertions)]
+    {
+        fn debug_builtin_cache() {
+            assets::builtin().enhance_hot_reloading();
+        }
+    } else {
+        fn debug_builtin_cache() { /* stub */ }
+    }
 }
-
-#[cfg(not(debug_assertions))]
-fn debug_builtin_cache() {}
 
 fn main() {
     env_logger::Builder::from_default_env()

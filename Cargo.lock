@@ -768,6 +768,7 @@ name = "lilium"
 version = "0.1.0"
 dependencies = [
  "assets_manager",
+ "cfg-if 1.0.0",
  "env_logger",
  "game-loop",
  "log",
