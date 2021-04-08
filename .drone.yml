@@ -1,0 +1,29 @@
+---
+kind: pipeline
+type: docker
+name: rust
+
+steps:
+- name: build
+  image: rustlang/rust:nightly
+  commands:
+  - cargo build --release
+- name: gitea_release
+  image: plugins/gitea-release
+  settings:
+    draft: true
+    note: README.md
+    api_key:
+      from_secret: gitea_token
+    base_url: https://git.envs.net
+    files:
+      - target/release/lilium
+    checksum:
+      - md5
+      - sha1
+      - sha256
+      - sha512
+      - adler32
+      - crc32
+  when:
+    event: tag
