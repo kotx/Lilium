@@ -9,7 +9,7 @@ log = "^0.4"
 env_logger = "^0.8"
 
 cfg-if = "1"
-once_cell = "1.7"
+once_cell = "1.8"
 
 winit = "^0.24"
 
