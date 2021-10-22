@@ -84,9 +84,9 @@ dependencies = [
 
 [[package]]
 name = "assets_manager"
-version = "0.4.4"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "792c2eca2af86c76ffd3e72ca564c33b5a5551d5ac3f4f87dce8c0b7c6434061"
+checksum = "f17769d44fe3eee8cdc255520183fee4e76b30f105de6431cd034e1d7a6f0499"
 dependencies = [
  "ahash",
  "assets_manager_macros",
@@ -98,9 +98,9 @@ dependencies = [
 
 [[package]]
 name = "assets_manager_macros"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d3e3f7adbbcf88048ee845f12e10204efbc3d576e9fdc5fd93a179833c9b793b"
+checksum = "3210d5f344a6534bee94fac9f9ae660ff740d2d84e699c3eaeca643c4e79b824"
 dependencies = [
  "proc-macro2",
  "quote",
